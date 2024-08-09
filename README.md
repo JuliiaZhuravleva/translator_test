@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Translator with ChatGPT
 
-## Getting Started
+This project is a translation service powered by OpenAI's GPT models. The service translates a given text into multiple languages using ChatGPT. The project is built with Next.js and TypeScript.
 
-First, run the development server:
+## Prerequisites
+
+Before running the project, make sure you have the following installed:
+
+- **Node.js** (v14 or later)
+- **pnpm** (Package manager)
+
+## Installation
+
+1. **Clone the repository:**
+    
+    ```bash
+    git clone <https://github.com/yourusername/translator.git>
+    cd translator
+    ```
+    
+2. **Install the dependencies:**
+    
+    ```bash
+    pnpm install
+    ```
+    
+3. **Create a `.env` file:**
+    
+    In the root directory of the project, create a file named `.env` and add your OpenAI API key:
+    
+    ```bash
+    NEXT_PUBLIC_OPENAI_API_KEY=your-openai-api-key
+    ```
+    
+    Replace `your-openai-api-key` with your actual API key from OpenAI.
+    
+
+## Running the Project
+
+To start the development server, run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the Next.js development server on http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **`src/app/api/translate/route.ts`**: Handles the API requests for translation.
+- **`src/services/openaiService.ts`**: Contains the logic for interacting with OpenAI's API to perform translations.
+- **`src/components/LanguageSelector.tsx`**: React component for selecting target languages.
+- **`src/app/page.tsx`**: Main page where users can input text and request translations.
 
-## Learn More
+## API Routes
 
-To learn more about Next.js, take a look at the following resources:
+- **POST `/api/translate`**: Takes a `text` and `languages` array in the request body and returns translations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Example Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+curl -X POST http://localhost:3000/api/translate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Hello, world!",
+    "languages": ["Spanish", "French", "German"]
+  }'
+```
 
-## Deploy on Vercel
+## Example Response
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+  "translations": {
+    "Spanish": "¡Hola, mundo!",
+    "French": "Bonjour, le monde!",
+    "German": "Hallo, Welt!"
+  }
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Additional Resources
+
+- [OpenAI API Documentation](https://beta.openai.com/docs/)
+- [Next.js Documentation](https://nextjs.org/docs)
